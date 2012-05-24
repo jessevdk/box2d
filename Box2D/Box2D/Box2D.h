@@ -55,6 +55,7 @@ For discussion please visit http://box2d.org/forum
 
 #include <Box2D/Dynamics/Joints/b2DistanceJoint.h>
 #include <Box2D/Dynamics/Joints/b2FrictionJoint.h>
+#include <Box2D/Dynamics/Joints/b2BiFrictionJoint.h>
 #include <Box2D/Dynamics/Joints/b2GearJoint.h>
 #include <Box2D/Dynamics/Joints/b2MotorJoint.h>
 #include <Box2D/Dynamics/Joints/b2MouseJoint.h>

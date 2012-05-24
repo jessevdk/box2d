@@ -388,6 +388,7 @@ private:
 	
 	friend class b2DistanceJoint;
 	friend class b2FrictionJoint;
+	friend class b2BiFrictionJoint;
 	friend class b2GearJoint;
 	friend class b2MotorJoint;
 	friend class b2MouseJoint;

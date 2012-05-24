@@ -26,6 +26,7 @@
 #include <Box2D/Dynamics/Joints/b2GearJoint.h>
 #include <Box2D/Dynamics/Joints/b2WeldJoint.h>
 #include <Box2D/Dynamics/Joints/b2FrictionJoint.h>
+#include <Box2D/Dynamics/Joints/b2BiFrictionJoint.h>
 #include <Box2D/Dynamics/Joints/b2RopeJoint.h>
 #include <Box2D/Dynamics/Joints/b2MotorJoint.h>
 #include <Box2D/Dynamics/b2Body.h>
@@ -103,6 +104,13 @@ b2Joint* b2Joint::Create(const b2JointDef* def, b2BlockAllocator* allocator)
 		}
 		break;
 
+	case e_biFrictionJoint:
+		{
+			void* mem = allocator->Allocate(sizeof(b2BiFrictionJoint));
+			joint = new (mem) b2BiFrictionJoint((b2BiFrictionJointDef*)def);
+		}
+		break;
+
 	case e_ropeJoint:
 		{
 			void* mem = allocator->Allocate(sizeof(b2RopeJoint));
@@ -173,6 +181,9 @@ void b2Joint::Destroy(b2Joint* joint, b2BlockAllocator* allocator)
 	case e_motorJoint:
 		allocator->Free(joint, sizeof(b2MotorJoint));
 		break;
+
+	case e_biFrictionJoint:
+		allocator->Free(joint, sizeof(b2BiFrictionJoint));
 
 	default:
 		b2Assert(false);
