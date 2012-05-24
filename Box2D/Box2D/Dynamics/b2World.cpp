@@ -240,15 +240,24 @@ b2Joint* b2World::CreateJoint(const b2JointDef* def)
 	j->m_edgeB.joint = j;
 	j->m_edgeB.other = j->m_bodyA;
 	j->m_edgeB.prev = NULL;
-	j->m_edgeB.next = j->m_bodyB->m_jointList;
-	if (j->m_bodyB->m_jointList) j->m_bodyB->m_jointList->prev = &j->m_edgeB;
-	j->m_bodyB->m_jointList = &j->m_edgeB;
+
+	if (j->m_bodyB)
+	{
+		j->m_edgeB.next = j->m_bodyB->m_jointList;
+
+		if (j->m_bodyB->m_jointList) j->m_bodyB->m_jointList->prev = &j->m_edgeB;
+		j->m_bodyB->m_jointList = &j->m_edgeB;
+	}
+	else
+	{
+		j->m_edgeB.next = NULL;
+	}
 
 	b2Body* bodyA = def->bodyA;
 	b2Body* bodyB = def->bodyB;
 
 	// If the joint prevents collisions, then flag any contacts for filtering.
-	if (def->collideConnected == false)
+	if (def->collideConnected == false && bodyB)
 	{
 		b2ContactEdge* edge = bodyB->GetContactList();
 		while (edge)
@@ -508,7 +517,7 @@ void b2World::Solve(const b2TimeStep& step)
 				b2Body* other = je->other;
 
 				// Don't simulate joints connected to inactive bodies.
-				if (other->IsActive() == false)
+				if (other && other->IsActive() == false)
 				{
 					continue;
 				}
@@ -516,7 +525,7 @@ void b2World::Solve(const b2TimeStep& step)
 				island.Add(je->joint);
 				je->joint->m_islandFlag = true;
 
-				if (other->m_flags & b2Body::e_islandFlag)
+				if (!other || (other->m_flags & b2Body::e_islandFlag))
 				{
 					continue;
 				}
@@ -1093,6 +1102,11 @@ void b2World::DrawShape(b2Fixture* fixture, const b2Transform& xf, const b2Color
 
 void b2World::DrawJoint(b2Joint* joint)
 {
+	if (!joint->GetBodyB())
+	{
+		return;
+	}
+
 	b2Body* bodyA = joint->GetBodyA();
 	b2Body* bodyB = joint->GetBodyB();
 	const b2Transform& xf1 = bodyA->GetTransform();
