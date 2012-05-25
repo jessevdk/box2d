@@ -85,6 +85,7 @@ set(BOX2D_Contacts_HDRS
 	Dynamics/Contacts/b2PolygonContact.h
 )
 set(BOX2D_Joints_SRCS
+    Dynamics/Joints/b2MotorJoint.cpp
 	Dynamics/Joints/b2DistanceJoint.cpp
 	Dynamics/Joints/b2FrictionJoint.cpp
 	Dynamics/Joints/b2BiFrictionJoint.cpp
@@ -99,6 +100,7 @@ set(BOX2D_Joints_SRCS
 	Dynamics/Joints/b2WheelJoint.cpp
 )
 set(BOX2D_Joints_HDRS
+    Dynamics/Joints/b2MotorJoint.h
 	Dynamics/Joints/b2DistanceJoint.h
 	Dynamics/Joints/b2FrictionJoint.h
 	Dynamics/Joints/b2BiFrictionJoint.h
