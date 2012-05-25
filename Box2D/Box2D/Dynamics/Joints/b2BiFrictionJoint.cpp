@@ -110,7 +110,7 @@ void b2BiFrictionJoint::SolveVelocityConstraints(const b2SolverData& data)
 	// the friction. Note that this is currently a bit strange kind of
 	// friction since it is still present when moving. I.e. dynamic friction
 	// is equal to static friction at the moment
-	b2Vec2 canvelv = b2Clamp(localv, -minfric, maxfric);
+	b2Vec2 cancelv = b2Clamp(localv, -minv, maxv);
 	
 	// TODO: implement static and dynamic friction
 
